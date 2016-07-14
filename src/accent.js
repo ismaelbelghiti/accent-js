@@ -131,8 +131,10 @@ function accentNode(node, patternLists, replacementFunction) {
 			$(node).replaceWith(newText);
 		}
 	}
-	$(node).contents().each(function() {
-		accentNode(this, patternLists, replacementFunction);
-	});
+	if($(node).prop("tagName") != "SCRIPT") {
+		$(node).contents().each(function() {
+			accentNode(this, patternLists, replacementFunction);
+		});
+	}
 }
 
