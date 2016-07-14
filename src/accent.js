@@ -44,7 +44,7 @@ function Automata(patternLists) {
 	 * Non-token words are associated to token "".
 	 */
 	var tokenize = function(text) {
-		var words = text.split(/([ .,-;\/\"])/).filter(function (item) {
+		var words = text.split(/([ .,-;\/\"\n\r])/).filter(function (item) {
 			return item != "";
 		});
 		var tokens_ = words.map(function(s) {
