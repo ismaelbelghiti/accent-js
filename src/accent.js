@@ -1,3 +1,8 @@
+function isFunction(functionToCheck) {
+	var getType = {};
+	return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}
+
 function Automata(patternLists) {
 	// initialize all the tokens and start tokens present in the patternLists
 	var tokens = {};
@@ -28,7 +33,8 @@ function Automata(patternLists) {
 			var curTree = searchTree;
 			for (var iToken = 0; iToken < tokenList.length; iToken++) {
 				var token = tokenList[iToken];
-				if (curTree.children[token] == undefined) {
+				if (curTree.children[token] == undefined ||
+					isFunction(curTree.children[token])) {
 					curTree.children[token] = { children: [] };
 				}
 				curTree = curTree.children[token];
@@ -44,7 +50,7 @@ function Automata(patternLists) {
 	 * Non-token words are associated to token "".
 	 */
 	var tokenize = function(text) {
-		var words = text.split(/([ .,-;\/\"\n\r])/).filter(function (item) {
+		var words = text.split(/([() .,-;\/\"\n\r])/).filter(function (item) {
 			return item != "";
 		});
 		var tokens_ = words.map(function(s) {
